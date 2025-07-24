@@ -1,19 +1,50 @@
-//@include "./common.jsx"
+var SCRIPT = {
+    name: "图稿设计工具箱-PS",
+    version: "0.0.1",
+};
 
 var win = new Window("dialog", SCRIPT.name + " v" + SCRIPT.version, undefined, {
     closeButton: true,
 });
-win.alignChildren = ["fill", "fill"];
+win.alignChildren = "fill";
 
+// =======================================================
 // 标注尺寸
-// ==========
 var PA = win.add("panel", undefined, "标注尺寸");
-PA.BTN1 = PA.add("button", undefined, "确定");
-PA.BTN1.onClick = function () {
+var BTN1 = PA.add("button", undefined, "确定");
+BTN1.onClick = function () {
     markSize();
     win.close();
 };
 
+// =======================================================
+// 编组排列
+var PB = win.add("panel", undefined, "编组排列");
+PB.alignChildren = "fill";
+
+PB.groupColumns = PB.add("group");
+PB.groupColumns.orientation = "row";
+PB.groupColumns.add("statictext", undefined, "列数");
+PB.valueColumns = PB.groupColumns.add("edittext", undefined, "3");
+PB.valueColumns.preferredSize = [50, -1];
+
+PB.groupGutterX = PB.add("group");
+PB.groupGutterX.orientation = "row";
+PB.groupGutterX.add("statictext", undefined, "水平间距");
+PB.valueGutterX = PB.groupGutterX.add("edittext", undefined, "100");
+PB.valueGutterX.preferredSize = [50, -1];
+
+PB.groupGutterY = PB.add("group");
+PB.groupGutterY.orientation = "row";
+PB.groupGutterY.add("statictext", undefined, "垂直间距");
+PB.valueGutterY = PB.groupGutterY.add("edittext", undefined, "100");
+PB.valueGutterY.preferredSize = [50, -1];
+
+PB.groupButtons = PB.add("group");
+PB.groupButtons.orientation = "row";
+PB.BTN1 = PB.groupButtons.add("button", undefined, "确定");
+
+// =======================================================
 win.show();
 
 function markSize() {
@@ -50,11 +81,31 @@ function markSize() {
         UTILS.drawLine([x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth, y1], [x1 - CFG.markSizeGap, y1]);
         UTILS.drawLine([x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth, y2], [x1 - CFG.markSizeGap, y2]);
         UTILS.drawLine([x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2, y1], [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2, y2]);
+        UTILS.drawArrow(
+            [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2, y1],
+            [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2 - CFG.markSizeArrowSize / 2, y1 + CFG.markSizeArrowSize],
+            [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2 + CFG.markSizeArrowSize / 2, y1 + CFG.markSizeArrowSize]
+        );
+        UTILS.drawArrow(
+            [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2, y2],
+            [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2 - CFG.markSizeArrowSize / 2, y2 - CFG.markSizeArrowSize],
+            [x1 - CFG.markSizeGap - CFG.markSizeShortLineWidth / 2 + CFG.markSizeArrowSize / 2, y2 - CFG.markSizeArrowSize]
+        );
 
         // 下边
         UTILS.drawLine([x1, y2 + CFG.markSizeGap], [x1, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth]);
         UTILS.drawLine([x2, y2 + CFG.markSizeGap], [x2, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth]);
         UTILS.drawLine([x1, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2], [x2, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2]);
+        UTILS.drawArrow(
+            [x1, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2],
+            [x1 + CFG.markSizeArrowSize, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2 - CFG.markSizeArrowSize / 2],
+            [x1 + CFG.markSizeArrowSize, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2 + CFG.markSizeArrowSize / 2]
+        );
+        UTILS.drawArrow(
+            [x2, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2],
+            [x2 - CFG.markSizeArrowSize, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2 - CFG.markSizeArrowSize / 2],
+            [x2 - CFG.markSizeArrowSize, y2 + CFG.markSizeGap + CFG.markSizeShortLineWidth / 2 + CFG.markSizeArrowSize / 2]
+        );
     } catch (error) {
         $.writeln(error);
         $.writeln(error.line);

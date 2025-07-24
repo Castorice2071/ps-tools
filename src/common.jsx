@@ -7,6 +7,7 @@ var CFG = {
     markSizeLayerSetName: "标注尺寸组",
     markSizeGap: 4, // 标注线与选区的间距
     markSizeShortLineWidth: 8, // 短线的长度
+    markSizeArrowSize: 6, // 箭头大小
 };
 
 var UTILS = {
@@ -23,8 +24,7 @@ var UTILS = {
     },
 
     /**
-     * 画一条线段
-     * @param {*} doc
+     * 绘制线段
      * @param {*} start
      * @param {*} stop
      */
@@ -61,6 +61,21 @@ var UTILS = {
         // 描边完成后移除路径项
         // 因为我们只需要线段的效果，不需要保留路径项
         line.remove();
+    },
+
+    /**
+     * 绘制箭头
+     */
+    drawArrow: function (p1, p2, p3) {
+        try {
+            var doc = app.activeDocument;
+            doc.selection.deselect();
+            doc.selection.select([p1, p2, p3]);
+            doc.selection.fill(app.foregroundColor);
+            doc.selection.deselect();
+        } catch (e) {
+            alert("绘制箭头失败: " + e.message);
+        }
     },
 
     /**
