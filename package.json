@@ -22,7 +22,9 @@
     },
     "homepage": "https://github.com/Castorice2071/ps-tools#readme",
     "dependencies": {
-        "photoshop-script-api": "^1.0.4",
-        "types-for-adobe": "^7.2.5"
+        "photoshop-script-api": "^1.0.4"
+    },
+    "devDependencies": {
+        "prettier": "^3.6.2"
     }
 }

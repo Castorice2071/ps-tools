@@ -1,7 +1,8 @@
-/node_modules/
-/test/
+node_modules
+
+
+
 /photoshop_javascript_脚本/
 /Photoshop-Export-Layers-to-Files-Fast-main/
 /photoshop-scripts/
 /photoshop-script-api/
-/types/
